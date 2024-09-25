@@ -1,10 +1,22 @@
+const Product = require('../Models/product')
+
+
 exports.read = async(req, res)=>{
-    res.send('hello Controller Read')
+    try {
+        const id = req.params.id
+
+        const producted = await Product.findOne({_id: id}).exec();
+        res.send(producted)
+     } catch (error) {
+        console.log(error);
+        res.status(500).send("Server Error") 
+     }   
 }
 
 exports.list = async(req,res) => {
  try {
-    res.send('Hello List')
+    const producted = await Product.find({}).exec();
+    res.send(producted)
  } catch (error) {
     console.log(error);
     res.status(500).send("Server Error") 
@@ -12,7 +24,9 @@ exports.list = async(req,res) => {
 }
 exports.create = async(req,res) => {
  try {
-    res.send('Hello create')
+    console.log(req.body);
+    const producted = await Product(req.body).save()
+    res.send(producted)
  } catch (error) {
     console.log(error);
     res.status(500).send("Server Error") 
@@ -20,7 +34,10 @@ exports.create = async(req,res) => {
 }
 exports.update= async(req,res) => {
  try {
-    res.send('Hello update')
+    const id = req.params.id
+
+    const updated = await Product.findOneAndUpdate({_id:id} , req.body ,{new: true}).exec()
+    res.send(updated)
  } catch (error) {
     console.log(error);
     res.status(500).send("Server Error") 
@@ -29,7 +46,9 @@ exports.update= async(req,res) => {
 
 exports.remove= async(req,res) => {
  try {
-    res.send('Hello delete')
+    const id = req.params.id
+    const removed = await Product.findOneAndDelete({_id:id}).exec()
+    res.send(removed)
  } catch (error) {
     console.log(error);
     res.status(500).send("Server Error") 

@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 
 const productSchema = mongoose.Schema({
-    name: String,
-    detail: {
-        type: String
+    name:String,
+    detail:{
+        type:String
     },
-    price: {
+    price:{
         type: Number
     }
-}, { timestamps: true })
+}, {timestamps: true})
 
-module.exports = mongoose.model('products', productSchema)
+module.exports = mongoose.model('products' , productSchema)
